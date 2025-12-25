@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Tessera" width="200">
+  <img src="https://raw.githubusercontent.com/ashita-ai/tessera-python/main/assets/logo.png" alt="Tessera" width="200">
 </p>
 
 <h1 align="center">Tessera Python SDK</h1>
