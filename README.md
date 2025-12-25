@@ -178,5 +178,5 @@ except ValidationError as e:
 ## Related
 
 - [Tessera Server](https://github.com/ashita-ai/tessera) - The Tessera API server
-- [Tessera Documentation](https://tessera.readthedocs.io) - Full documentation
+- [Tessera Documentation](https://ashita-ai.github.io/tessera) - Full documentation
 
