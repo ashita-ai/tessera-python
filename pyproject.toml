@@ -1,6 +1,6 @@
 [project]
 name = "tessera-sdk"
-version = "0.1.1"
+version = "0.1.2"
 description = "Python SDK for Tessera - Data contract coordination for warehouses"
 readme = "README.md"
 license = { text = "MIT" }
