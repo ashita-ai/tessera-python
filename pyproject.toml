@@ -35,9 +35,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/ashita-ai/tessera"
-Documentation = "https://github.com/ashita-ai/tessera#readme"
-Repository = "https://github.com/ashita-ai/tessera"
+Homepage = "https://github.com/ashita-ai/tessera-python"
+Documentation = "https://github.com/ashita-ai/tessera-python#readme"
+Repository = "https://github.com/ashita-ai/tessera-python"
+"Tessera Server" = "https://github.com/ashita-ai/tessera"
 
 [build-system]
 requires = ["hatchling"]
