@@ -36,7 +36,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/ashita-ai/tessera-python"
-Documentation = "https://github.com/ashita-ai/tessera-python#readme"
+Documentation = "https://ashita-ai.github.io/tessera-python"
 Repository = "https://github.com/ashita-ai/tessera-python"
 "Tessera Server" = "https://github.com/ashita-ai/tessera"
 
