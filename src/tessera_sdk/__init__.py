@@ -70,6 +70,8 @@ from tessera_sdk.models import (
     Guarantees,
     ImpactAnalysis,
     LineageResponse,
+    ObjectionCreate,
+    ObjectionResponse,
     Proposal,
     ProposalCreate,
     ProposalStatus,
@@ -84,7 +86,7 @@ from tessera_sdk.models import (
     TeamUpdate,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.1.4"
 
 __all__ = [
     # Clients
@@ -128,5 +130,7 @@ __all__ = [
     "DependencyCreate",
     "ImpactAnalysis",
     "LineageResponse",
+    "ObjectionCreate",
+    "ObjectionResponse",
     "PublishResult",
 ]

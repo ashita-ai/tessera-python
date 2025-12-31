@@ -224,12 +224,34 @@ class Proposal(BaseModel):
     proposed_by: UUID
     proposed_at: datetime
     resolved_at: datetime | None = None
+    # Tiered acknowledgment fields (v0.1.5+)
+    affected_teams: list[dict[str, Any]] = Field(default_factory=list)
+    affected_assets: list[dict[str, Any]] = Field(default_factory=list)
+    objections: list[dict[str, Any]] = Field(default_factory=list)
+    has_objections: bool = False
 
 
 class ProposalCreate(BaseModel):
     """Fields for creating a proposal."""
 
     proposed_schema: dict[str, Any]
+
+
+class ObjectionCreate(BaseModel):
+    """Fields for filing an objection to a proposal."""
+
+    reason: str = Field(..., min_length=1, max_length=1000)
+
+
+class ObjectionResponse(BaseModel):
+    """Response from filing an objection."""
+
+    action: str
+    proposal_id: str
+    asset_fqn: str
+    objection: dict[str, Any]
+    total_objections: int
+    note: str
 
 
 # Acknowledgment models
