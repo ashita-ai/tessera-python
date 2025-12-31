@@ -21,6 +21,8 @@ from tessera_sdk.models import (
     DependencyType,
     ImpactAnalysis,
     LineageResponse,
+    ObjectionCreate,
+    ObjectionResponse,
     Proposal,
     ProposalStatus,
     ProposalStatusResponse,
@@ -794,6 +796,35 @@ class ProposalsResource:
         response = self._http.post(f"{self._base}/{proposal_id}/publish")
         return Contract.model_validate(response)
 
+    def file_objection(
+        self,
+        proposal_id: UUID | str,
+        objector_team_id: UUID | str,
+        reason: str,
+        objector_user_id: UUID | str | None = None,
+    ) -> ObjectionResponse:
+        """File an objection to a proposal.
+
+        Args:
+            proposal_id: The proposal to object to.
+            objector_team_id: The team filing the objection.
+            reason: The reason for the objection (1-1000 chars).
+            objector_user_id: Optional user ID filing the objection.
+
+        Returns:
+            ObjectionResponse with objection details.
+        """
+        data = ObjectionCreate(reason=reason)
+        params: dict[str, Any] = {"objector_team_id": str(objector_team_id)}
+        if objector_user_id:
+            params["objector_user_id"] = str(objector_user_id)
+        response = self._http.post(
+            f"{self._base}/{proposal_id}/object",
+            json=data.model_dump(),
+            params=params,
+        )
+        return ObjectionResponse.model_validate(response)
+
 
 class AsyncProposalsResource:
     """Proposals API resource (async)."""
@@ -860,3 +891,32 @@ class AsyncProposalsResource:
         """Publish an approved proposal as a new contract."""
         response = await self._http.post(f"{self._base}/{proposal_id}/publish")
         return Contract.model_validate(response)
+
+    async def file_objection(
+        self,
+        proposal_id: UUID | str,
+        objector_team_id: UUID | str,
+        reason: str,
+        objector_user_id: UUID | str | None = None,
+    ) -> ObjectionResponse:
+        """File an objection to a proposal.
+
+        Args:
+            proposal_id: The proposal to object to.
+            objector_team_id: The team filing the objection.
+            reason: The reason for the objection (1-1000 chars).
+            objector_user_id: Optional user ID filing the objection.
+
+        Returns:
+            ObjectionResponse with objection details.
+        """
+        data = ObjectionCreate(reason=reason)
+        params: dict[str, Any] = {"objector_team_id": str(objector_team_id)}
+        if objector_user_id:
+            params["objector_user_id"] = str(objector_user_id)
+        response = await self._http.post(
+            f"{self._base}/{proposal_id}/object",
+            json=data.model_dump(),
+            params=params,
+        )
+        return ObjectionResponse.model_validate(response)
