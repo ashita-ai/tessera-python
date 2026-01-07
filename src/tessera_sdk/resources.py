@@ -752,7 +752,19 @@ class ProposalsResource:
             params["status"] = status.value
         response = self._http.get(self._base, params=params)
         return [Proposal.model_validate(p) for p in response]
+    
+    def expire(self, proposal_id: UUID | str) -> Proposal:
+        """Mark a proposal as expired."""
+        response = self._http.post(f"{self._base}/{proposal_id}/expire")
+        return Proposal.model_validate(response)
 
+    def expire_pending(self, older_than_days: int = 30) -> dict:
+        """Expire all pending proposals older than threshold."""
+        return self._http.post(
+            f"{self._base}/expire-pending",
+            json={"older_than_days": older_than_days},
+        )
+    
     def get(self, proposal_id: UUID | str) -> Proposal:
         """Get a proposal by ID."""
         response = self._http.get(f"{self._base}/{proposal_id}")
