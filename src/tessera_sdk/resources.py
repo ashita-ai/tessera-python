@@ -85,6 +85,29 @@ class TeamsResource:
         )
         return Team.model_validate(response)
 
+    def delete(self, team_id: UUID | str, force: bool = False) -> None:
+        """Soft delete a team. Use force=True if the team has assets."""
+        params = {"force": "true"} if force else None
+        self._http.delete(f"{self._base}/{team_id}", params=params)
+
+    def restore(self, team_id: UUID | str) -> Team:
+        """Restore a soft-deleted team."""
+        response = self._http.post(f"{self._base}/{team_id}/restore")
+        return Team.model_validate(response)
+
+    def reassign_assets(
+        self,
+        team_id: UUID | str,
+        target_team_id: UUID | str,
+        asset_ids: list[UUID] | None = None,
+    ) -> dict[str, Any]:
+        """Reassign assets to another team before deletion."""
+        payload: dict[str, Any] = {"target_team_id": str(target_team_id)}
+        if asset_ids is not None:
+            payload["asset_ids"] = [str(a) for a in asset_ids]
+
+        return self._http.post(f"{self._base}/{team_id}/reassign-assets", json=payload)
+
 
 class AsyncTeamsResource:
     """Teams API resource (async)."""
@@ -130,6 +153,29 @@ class AsyncTeamsResource:
             json=data.model_dump(exclude_none=True),
         )
         return Team.model_validate(response)
+
+    async def delete(self, team_id: UUID | str, force: bool = False) -> None:
+        """Soft delete a team. Use force=True if the team has assets."""
+        params = {"force": "true"} if force else None
+        await self._http.delete(f"{self._base}/{team_id}", params=params)
+
+    async def restore(self, team_id: UUID | str) -> Team:
+        """Restore a soft-deleted team."""
+        response = await self._http.post(f"{self._base}/{team_id}/restore")
+        return Team.model_validate(response)
+
+    async def reassign_assets(
+        self,
+        team_id: UUID | str,
+        target_team_id: UUID | str,
+        asset_ids: list[UUID] | None = None,
+    ) -> dict[str, Any]:
+        """Reassign assets to another team before deletion."""
+        payload: dict[str, Any] = {"target_team_id": str(target_team_id)}
+        if asset_ids is not None:
+            payload["asset_ids"] = [str(a) for a in asset_ids]
+
+        return await self._http.post(f"{self._base}/{team_id}/reassign-assets", json=payload)
 
 
 class AssetsResource:
