@@ -175,6 +175,19 @@ except ValidationError as e:
 - httpx >= 0.25.0
 - pydantic >= 2.0.0
 
+## Contributing
+
+We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+Quick start:
+
+```bash
+git clone https://github.com/ashita-ai/tessera-python.git
+cd tessera-python
+uv sync --all-extras
+uv run pre-commit install  # Auto-formats code on commit
+```
+
 ## Related
 
 - [Tessera Server](https://github.com/ashita-ai/tessera) - The Tessera API server
