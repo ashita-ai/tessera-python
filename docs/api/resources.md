@@ -38,12 +38,32 @@ team = client.teams.create(
 )
 ```
 
-#### delete(team_id: str) -> None
+#### delete(team_id: str, force: bool = False) -> None
 
-Delete a team.
+Soft delete a team. Use `force=True` if the team still owns assets.
 
 ```python
-client.teams.delete("team-uuid")
+client.teams.delete("team-uuid", force=True)
+```
+
+#### restore(team_id: str) -> Team
+
+Restore a soft-deleted team.
+
+```python
+restored = client.teams.restore("team-uuid")
+```
+
+#### reassign_assets(team_id: str, target_team_id: str, asset_ids: list[str] | None = None) -> dict
+
+Reassign assets to another team before deletion.
+
+```python
+client.teams.reassign_assets(
+    team_id="team-uuid",
+    target_team_id="target-team-uuid",
+    asset_ids=["asset-id-1", "asset-id-2"],
+)
 ```
 
 ---
